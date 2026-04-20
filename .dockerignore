@@ -1,0 +1,10 @@
+# git e ferrementas de cache
+.git
+.gitignore
+.dockerignore
+
+# Ambientes virtuais
+.env
+v.env
+venv
+env
