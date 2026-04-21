@@ -1,0 +1,15 @@
+.login-pf body {
+    
+    display: flex;
+    justify-content: center;
+    
+    height: 100vh;
+
+}
+
+
+.card-pf > div { 
+    width: 20vw; 
+    margin-left: auto;
+    margin-right: auto; /* Para manter o filho centralizado dentro do card */
+}
