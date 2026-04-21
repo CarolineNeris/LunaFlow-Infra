@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: lunaflow_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - lunaflow_network
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0.4
+    container_name: lunaflow_keycloak
+    command: start-dev
+    restart: unless-stopped
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB}
+      KC_DB_USERNAME: ${POSTGRES_USER}
+      KC_DB_PASSWORD: ${POSTGRES_PASSWORD}
+      KEYCLOAK_ADMIN: ${KC_ADMIN}
+      KEYCLOAK_ADMIN_PASSWORD: ${KC_ADMIN_PASSWORD}
+     
+    ports:
+      - "8080:8080"
+    volumes:
+      # Mapeia sua pasta local de temas para dentro do Keycloak
+      - ./infra/keycloak/themes:/opt/keycloak/themes
+    depends_on:
+      - postgres
+    networks:
+      - lunaflow_network
+
+networks:
+  lunaflow_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  

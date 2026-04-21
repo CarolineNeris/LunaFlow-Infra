@@ -1,0 +1,7 @@
+# ignorar arquivos de segredo
+.env
+
+
+# Ignorar dados de banco de dados 
+postgres_data/
+
