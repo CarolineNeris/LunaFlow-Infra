@@ -1,0 +1,21 @@
+name: Deploy LunaFlow Auth
+
+on:
+  push:
+    branches: [ prod ]
+
+jobs:
+  deploy:
+    runs-on: self-hosted  # Identifica o seu servidor Dell
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Deploy with Docker Compose
+        run: |
+          cd ~/Apps/LunaFlow-Auth
+          # Garante que o código local está sincronizado
+          git pull origin main
+          # Sobe os containers com as novas alterações
+          docker compose up -d --build
